@@ -1,6 +1,6 @@
 import os
 from typing import List, Dict, Any
-from fastapi import FastAPI, Request, Response, BackgroundTask
+from fastapi import FastAPI, Request, Response, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
 from geo_resolver import GeoResolver
@@ -25,7 +25,7 @@ telemetry_db: List[Dict[str, Any]] = []
 def record_telemetry(ip: str, path: str):
     geo_data = geo_engine.resolve_ip(ip)
     geo_data["path"] = path
-    geo_data["timestamp"] = httpx.QueryParams({"t": "now"}).get("t")
+    geo_data["timestamp"] = "Just now"
     telemetry_db.append(geo_data)
 
 @app.get("/api/pulls")
@@ -37,11 +37,11 @@ async def run_ai_analysis():
     return {"analysis": ai_engine.analyze_telemetry(telemetry_db[-50:])}
 
 @app.api_route("/v2/{path:path}", methods=["GET", "HEAD", "POST"])
-async def proxy_registry(path: str, request: Request):
+async def proxy_registry(path: str, request: Request, background_tasks: BackgroundTasks):
     forwarded = request.headers.get("x-forwarded-for")
     client_ip = forwarded.split(",")[0].strip() if forwarded else request.client.host
 
-    task = BackgroundTask(record_telemetry, client_ip, path)
+    background_tasks.add_task(record_telemetry, client_ip, path)
 
     async with httpx.AsyncClient() as client:
         url = f"{UPSTREAM_REGISTRY}/v2/{path}"
@@ -56,7 +56,5 @@ async def proxy_registry(path: str, request: Request):
         return Response(
             content=resp.content,
             status_code=resp.status_code,
-            headers=dict(resp.headers),
-            background=task
+            headers=dict(resp.headers)
         )
-      
