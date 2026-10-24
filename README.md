@@ -63,6 +63,8 @@ Because you get to watch a 3D globe spin and glow every time someone in Tokyo, N
 ## What problems this solves?
 Normally, app stores or container registries just give you a cold, boring number like "500 downloads today." They don't tell you *who* is downloading it or *where* in the world they are. This project fixes that by showing you exact map locations and checking for weird computer traffic automatically.
 
+https://labs.google/fx/tools/flow/shared/video/1eef513b-711c-4657-8f39-cd9d7bdfbd97
+
 ## How does this works?
 When someone types the download command for your code, it goes through our special Python helper program first. That helper checks their internet address (IP), looks up their city using a map dictionary, saves it to a list, and instantly updates a 3D web page so you can see a shiny glowing pin drop on the globe!
 
