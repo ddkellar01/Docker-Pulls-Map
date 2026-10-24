@@ -54,6 +54,8 @@ It is about making software downloads visible and fun. Instead of looking at a b
 2. **Finds Locations**: Looks at their internet address and figures out their city, state, and country.
 3. **Draws a Map**: Sends that location to a 3D Google Earth globe website.
 4. **Asks an AI**: Wakes up a smart AI robot (Gemini Pro) to check the traffic and make sure everything looks healthy and normal.
+   
+https://labs.google/fx/tools/flow/shared/video/02d33b92-8996-43f3-a522-42097c835b62
 
 ## Why is this cool?
 Because you get to watch a 3D globe spin and glow every time someone in Tokyo, New York, or London pulls your code! Plus, you have an AI robot acting like a security guard looking out for your project.
